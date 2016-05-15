@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="row input">
+      <form class="col s12" action="/home/modified/<%= @one_post.id %>" method="POST">
+        <div class="input-field col s12">
+          <input name="title" type="text" class="validate" value="<%= @one_post.title %>">
+          <label for="title">TITLE</label>
+        </div>
+        <div class="input-field col s12">
+          <textarea name="content" class="materialize-textarea"><%= @one_post.content %></textarea>
+          <label for="content">CONTENT</label>
+          <button class="btn waves-effect waves-light" style="float:right;text-align:right;" type="submit" name="action">write</button>
+        </div>
+      </form>
+    </div> <!--- row input --->
+</div>

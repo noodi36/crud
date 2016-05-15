@@ -1,0 +1,57 @@
+  <div clas="container">
+  
+  <center><h2>메모 습관</h2></center>
+  <!------------------- 게시글 입력 ------------------->  
+    <div class="row input">
+      <form class="col s12" action="/home/write" method="POST">
+        <div class="input-field col s12">
+          <input name="title" type="text" class="validate">
+          <label for="title">TITLE</label>
+        </div>
+        <div class="input-field col s12">
+          <textarea name="content" class="materialize-textarea"></textarea>
+          <label for="content">CONTENT</label>
+          <button class="btn waves-effect waves-light" style="float:right;text-align:right;" type="submit" name="action">write</button>
+        </div>
+      </form>
+    </div> <!--- row input --->
+  
+  <!------------------- 게시글 출력 ------------------->
+    <div class="row output">
+      <% @posts.each do |p| %>
+        <div class="col s12 m4">
+          <div class="card small">
+            <div class="card-image waves-effect waves-block waves-light">
+              <img class="activator" src="/images/lion.jpg">
+            </div>
+            <div class="card-content">
+              <span class="card-title activator grey-text text-darken-4" style="font-weight:bold">
+                <%= p.title %>
+              </span>
+            </div>
+            <div class="card-reveal"> <!--------------- 카드 내용 나타내기 ------------------->
+              <span class="card-title grey-text text-darken-4">
+                <%= p.title %>
+                <small class="check">내용의 글자 수: <%= p.content.length %> / 단어 수 : <%= p.content.split(" ").length %></small>
+                <a href="/home/modify/<%= p.id %>">m</a> <!-------- 수정 버튼 -------->
+                <a href="/home/destroy/<%= p.id %>">x</a> <!-------- 삭제 버튼 -------->
+              </span>
+              <p><%= p.content %></p>
+              <div class="card-action"> <!------- 댓글 내용 입력 --------->
+                <form action="/home/write_comment" method="POST">
+                    <input type="hidden" value="<%= p.id %>" name="post_id">
+                    <input name="reply" type="text" class="validate">
+                    <button class="btn-flat" type="submit" style="float:right;text-align:right;" name="action">write</button>
+                </form>
+                <% p.comments.reverse_each do |r| %>
+                <p><%= r.reply %></p>
+                <% end %>
+              </div> <!--- card action --->
+            </div> <!--- card content --->
+          </div> <!--- card-small --->
+        </div> <!--- col s12 m4 --->
+      <% end %>
+    </div> <!--- row output --->
+  <!------------------- 게시글 출력 끝 ------------------->
+  
+  
